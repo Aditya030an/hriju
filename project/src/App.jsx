@@ -20,7 +20,7 @@ const App = () => {
   return (
     <BrowserRouter>
 
-      <div className="w-full min-h-screen bg-white overflow-x-hidden">
+      <div className="w-full min-h-screen bg-white overflow-x-hidden ">
 
         {/* NAVBAR */}
         <Navbar />

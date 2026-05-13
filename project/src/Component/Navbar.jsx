@@ -1,73 +1,59 @@
-
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Search,
-  Mic,
-  Heart,
-  ShoppingBag,
-  User,
-  Menu,
-  X,
-} from "lucide-react";
+import { Search, Mic, ShoppingBag, User, Menu, X } from "lucide-react";
 
 import logo from "./photos/logo.png";
+import logoWhite from "./photos/logo_white.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const textBase = scrolled ? "text-black/70" : "text-white/70";
+  const textMuted = scrolled ? "text-black/60" : "text-white/60";
+  const textStrong = scrolled ? "text-black/80" : "text-white/80";
+  const textHover = scrolled ? "hover:text-black" : "hover:text-white";
+  const hoverBg = scrolled ? "hover:bg-black/5" : "hover:bg-white/10";
+  const underlineColor = scrolled ? "bg-black" : "bg-white";
+  const inputText = scrolled ? "text-black" : "text-white";
+  const placeholder = scrolled
+    ? "placeholder:text-black/40"
+    : "placeholder:text-white/40";
+  const divider = scrolled ? "bg-black/10" : "bg-white/10";
+  const searchBorder = scrolled ? "border-black/10" : "border-white/10";
+  const searchBg = scrolled ? "bg-black/5" : "bg-white/10";
 
   return (
     <>
       <nav
-        className="
-  fixed top-0 left-0 w-full z-20
-
-  bg-white/[0.03]
-
-  backdrop-blur-xs
-
-  border-b border-white/10
-
-  transition-all duration-500"
+        className={`fixed top-0 left-0 z-50 w-full border-b transition-all duration-500 ${
+          scrolled
+            ? "border-black/10 bg-white/90 backdrop-blur-md"
+            : "border-white/10 bg-white/[0.03] backdrop-blur-xs"
+        }`}
       >
-
         {/* TOP LINE */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div
+          className={`h-[1px] w-full bg-gradient-to-r from-transparent to-transparent ${
+            scrolled ? "via-black/10" : "via-white/20"
+          }`}
+        />
 
         {/* MAIN */}
-        <div
-          className="
-  max-w-[1700px]
-  mx-auto
-
-  h-[72px]
-
-  px-5 md:px-8
-
-  grid grid-cols-[1fr_auto_1fr]
-  items-center
-
-  gap-6"
-        >
+        <div className="mx-auto grid h-[72px] max-w-[1700px] grid-cols-[1fr_auto_1fr] items-center gap-6 px-5 md:px-8">
           {/* LEFT */}
           <div className="flex items-center">
-
             {/* MOBILE MENU */}
             <button
               onClick={() => setMobileOpen((o) => !o)}
-              className="
-              lg:hidden
-
-              w-10 h-10 rounded-full
-
-              flex items-center justify-center
-
-              text-white/80 hover:text-white
-
-              hover:bg-white/10
-
-              transition-all duration-300"
+              className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 lg:hidden ${textStrong} ${hoverBg} ${textHover}`}
             >
               {mobileOpen ? (
                 <X size={22} strokeWidth={1.9} />
@@ -77,387 +63,157 @@ const Navbar = () => {
             </button>
 
             {/* DESKTOP LINKS */}
-            <div className="hidden lg:flex items-center gap-8">
-
+            <div className="hidden items-center gap-8 lg:flex">
               <Link to="/MenPage">
-
                 <button
-                  className="
-    relative
-
-    text-[14px]
-    font-semibold
-
-    tracking-[0.18em]
-    uppercase
-
-    text-white/70
-    hover:text-white
-
-    transition-all duration-300
-
-    group"
+                  className={`group relative text-[14px] font-semibold uppercase tracking-[0.18em] transition-all duration-300 ${textBase} ${textHover}`}
                 >
-
                   Men
-
                   <span
-                    className="
-      absolute left-0 -bottom-[4px]
-
-      w-0 h-[2px]
-
-      bg-white rounded-full
-
-      transition-all duration-500
-
-      group-hover:w-full"
+                    className={`absolute -bottom-[4px] left-0 h-[2px] w-0 rounded-full transition-all duration-500 group-hover:w-full ${underlineColor}`}
                   />
-
                 </button>
-
               </Link>
 
               <button
-                className="
-                text-[14px]
-                font-semibold
-
-                tracking-[0.18em]
-                uppercase
-
-                text-white/60
-                hover:text-white
-
-                transition-all duration-300"
+                className={`text-[14px] font-semibold uppercase tracking-[0.18em] transition-all duration-300 ${textMuted} ${textHover}`}
               >
                 Women
               </button>
 
               <button
-                className="
-                text-[14px]
-                font-semibold
-
-                tracking-[0.18em]
-                uppercase
-
-                text-white/60
-                hover:text-white
-
-                transition-all duration-300"
+                className={`text-[14px] font-semibold uppercase tracking-[0.18em] transition-all duration-300 ${textMuted} ${textHover}`}
               >
                 OWNDAYS
               </button>
 
-
-
               <Link to="/Aboutus">
-
                 <button
-                  className="
-  relative
-
-  text-[14px]
-  font-semibold
-
-  tracking-[0.18em]
-  uppercase
-
-  text-white/70
-  hover:text-white
-
-  transition-all duration-300
-
-  group"
+                  className={`group relative text-[14px] font-semibold uppercase tracking-[0.18em] transition-all duration-300 ${textBase} ${textHover}`}
                 >
-
                   About Us
-
                   <span
-                    className="
-    absolute left-0 -bottom-[4px]
-
-    w-0 h-[2px]
-
-    bg-white rounded-full
-
-    transition-all duration-500
-
-    group-hover:w-full"
+                    className={`absolute -bottom-[4px] left-0 h-[2px] w-0 rounded-full transition-all duration-500 group-hover:w-full ${underlineColor}`}
                   />
-
                 </button>
-
               </Link>
-
             </div>
-
           </div>
 
           {/* LOGO */}
           <Link to="/">
-
-            <div className="flex items-center justify-center relative z-20">
-
+            <div className="relative z-20 flex items-center justify-center">
               <img
-                src={logo}
+                src={scrolled ? logo : logoWhite}
                 alt="logo"
-                className="
-                w-[85px] md:w-[105px]
-
-                object-contain
-
-                select-none"
+                className="h-10 w-auto max-w-[120px] select-none object-contain transition-opacity duration-300 md:h-12"
               />
-
             </div>
-
           </Link>
 
           {/* RIGHT */}
           <div className="flex items-center justify-end gap-4">
-
             {/* SEARCH */}
             <div
-              className="
-              hidden xl:flex items-center
-
-              w-[270px]
-              2xl:w-[340px]
-
-              h-[50px]
-
-              rounded-full
-
-              border border-white/10
-
-              bg-white/10
-              backdrop-blur-xl
-
-              px-5 py-2
-
-              transition-all duration-300"
+              className={`hidden h-[50px] w-[270px] items-center rounded-full border px-5 py-2 backdrop-blur-xl transition-all duration-300 xl:flex 2xl:w-[340px] ${searchBorder} ${searchBg}`}
             >
-
               <input
                 type="text"
                 placeholder="Search products"
-                className="
-                flex-1
-
-                bg-transparent
-                outline-none
-
-                text-[13px]
-                font-medium
-
-                py-2
-
-                text-white
-
-                placeholder:text-white/40"
+                className={`flex-1 bg-transparent py-2 text-[13px] font-medium outline-none ${inputText} ${placeholder}`}
               />
 
-              <div className="flex items-center gap-3 text-white/60">
-
+              <div className={`flex items-center gap-3 ${textMuted}`}>
                 <button
-                  className="
-                  hover:text-white
-                  transition-all duration-300"
+                  className={`transition-all duration-300 ${textHover}`}
                 >
                   <Mic size={17} strokeWidth={2} />
                 </button>
 
-                <div className="w-[1px] h-4 bg-white/10" />
+                <div className={`h-4 w-[1px] ${divider}`} />
 
                 <button
-                  className="
-                  hover:text-white
-                  transition-all duration-300"
+                  className={`transition-all duration-300 ${textHover}`}
                 >
                   <Search size={17} strokeWidth={2} />
                 </button>
-
               </div>
-
             </div>
 
             {/* ICONS */}
             <div className="flex items-center gap-1">
-
               {/* USER */}
               <Link to="/login">
-
                 <button
-                  className="
-                  w-10 h-10 rounded-full
-
-                  flex items-center justify-center
-
-                  text-white/80
-                  hover:text-white
-
-                  hover:bg-white/10
-
-                  transition-all duration-300"
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${textStrong} ${hoverBg} ${textHover}`}
                 >
-
                   <User size={21} strokeWidth={1.9} />
-
                 </button>
-
               </Link>
-
 
               {/* CART */}
               <Link to="/cart">
-
                 <button
-                  className="
-                  relative
-
-                  w-10 h-10 rounded-full
-
-                  flex items-center justify-center
-
-                  text-white/80
-                  hover:text-white
-
-                  hover:bg-white/10
-
-                  transition-all duration-300"
+                  className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${textStrong} ${hoverBg} ${textHover}`}
                 >
-
                   <ShoppingBag size={21} strokeWidth={1.9} />
 
                   {/* COUNT */}
                   <span
-                    className="
-                    absolute top-[6px] right-[6px]
-
-                    w-[15px] h-[15px]
-
-                    rounded-full
-
-                    bg-white
-                    text-black
-
-                    text-[8px]
-                    font-semibold
-
-                    flex items-center justify-center"
+                    className={`absolute right-[6px] top-[6px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] font-semibold ${
+                      scrolled ? "bg-black text-white" : "bg-white text-black"
+                    }`}
                   >
                     1
                   </span>
-
                 </button>
-
               </Link>
-
             </div>
-
           </div>
-
         </div>
-
       </nav>
 
       {/* MOBILE DRAWER */}
       <div
-        className={`
-        fixed inset-0 z-[998]
-
-        lg:hidden
-
-        transition-all duration-300
-
-        ${mobileOpen
-            ? "pointer-events-auto"
-            : "pointer-events-none"
-          }`}
+        className={`fixed inset-0 z-[998] transition-all duration-300 lg:hidden ${
+          mobileOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       >
-
         {/* BACKDROP */}
         <div
           onClick={() => setMobileOpen(false)}
-          className={`
-          absolute inset-0
-
-          bg-black/40
-          backdrop-blur-sm
-
-          transition-opacity duration-300
-
-          ${mobileOpen
-              ? "opacity-100"
-              : "opacity-0"
-            }`}
+          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+            mobileOpen ? "opacity-100" : "opacity-0"
+          }`}
         />
 
         {/* DRAWER */}
         <div
-          className={`
-          absolute top-[73px] left-0
-
-          w-full
-
-          bg-black/50
-          backdrop-blur-2xl
-
-          border-b border-white/10
-
-          px-6 py-6
-
-          flex flex-col gap-1
-
-          transition-all duration-300 ease-out
-
-          ${mobileOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-2"
-            }`}
+          className={`absolute left-0 top-[73px] flex w-full flex-col gap-1 border-b px-6 py-6 backdrop-blur-2xl transition-all duration-300 ease-out ${
+            scrolled
+              ? "border-black/10 bg-white/95"
+              : "border-white/10 bg-black/50"
+          } ${
+            mobileOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-2 opacity-0"
+          }`}
         >
-
           {/* MOBILE SEARCH */}
           <div
-            className="
-            flex items-center
-
-            h-[48px]
-
-            rounded-full
-
-            border border-white/10
-
-            bg-white/10
-
-            px-5 mb-4"
+            className={`mb-4 flex h-[48px] items-center rounded-full border px-5 ${searchBorder} ${searchBg}`}
           >
-
             <input
               type="text"
               placeholder="Search products"
-              className="
-              flex-1
-
-              bg-transparent
-              outline-none
-
-              text-[13px]
-              font-medium
-
-              text-white
-
-              placeholder:text-white/40"
+              className={`flex-1 bg-transparent text-[13px] font-medium outline-none ${inputText} ${placeholder}`}
             />
 
             <Search
               size={16}
               strokeWidth={2}
-              className="text-white/40"
+              className={scrolled ? "text-black/40" : "text-white/40"}
             />
-
           </div>
 
           {/* LINKS */}
@@ -465,32 +221,20 @@ const Navbar = () => {
             <button
               key={label}
               onClick={() => setMobileOpen(false)}
-              className={`
-              text-left
-
-              text-[15px]
-              font-semibold
-
-              tracking-[0.18em]
-              uppercase
-
-              py-4
-
-              border-b border-white/10
-
-              transition-colors duration-200
-
-              ${i === 0
-                  ? "text-white"
-                  : "text-white/60 hover:text-white"
-                }`}
+              className={`border-b py-4 text-left text-[15px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
+                scrolled ? "border-black/10" : "border-white/10"
+              } ${
+                i === 0
+                  ? scrolled
+                    ? "text-black"
+                    : "text-white"
+                  : `${textMuted} ${textHover}`
+              }`}
             >
               {label}
             </button>
           ))}
-
         </div>
-
       </div>
     </>
   );
